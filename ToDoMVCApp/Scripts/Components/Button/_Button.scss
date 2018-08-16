@@ -1,0 +1,32 @@
+﻿@import '../../../Stylesheets/Sass/Variables/_Colors.scss';
+@import '../../../Stylesheets/Sass/Variables/_FontFamilies.scss';
+
+.custom-button {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    min-width: 88px;
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+    font-weight: 500;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-family: $FontFamilyDescriptions;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    background-color: $ColorPrimary;
+    color: $ColorSecondary;
+    position: relative;
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
+}
+
+.custom-button:active {
+    top: 0px;
+    bottom: 0px;
+    opacity: 1 !important;
+}
+
+.custom-button:hover {
+    bottom: 2px;
+    opacity: 0.8;
+}

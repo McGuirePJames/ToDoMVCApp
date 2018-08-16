@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "./wwwroot/scripts",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "lib": [ "es2015", "dom" ],
+    "jsx": "react",
+    "module": "commonjs",
+    "types": [
+      "node"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
+}

@@ -2,10 +2,33 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>be10b7cc-1557-43f0-9652-82854f071871</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Scripts\Components\Button\Button.tsx" />
+    <None Remove="Scripts\Components\Login\Login.tsx" />
+    <None Remove="Scripts\Entries\Login\Index.tsx" />
+    <None Remove="Scripts\HighOrderComponents\LoginHOC.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoMVCApp.Data\ToDoMVCApp.Data.csproj" />
+    <ProjectReference Include="..\ToDoMVCApp.Repo\ToDoMVCApp.Repo.csproj" />
+    <ProjectReference Include="..\ToDoMVCApp.Service\ToDoMVCApp.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\Components\Button\Button.tsx" />
+    <TypeScriptCompile Include="Scripts\Components\Login\Login.tsx" />
+    <TypeScriptCompile Include="Scripts\Entries\Login\Index.tsx" />
+    <TypeScriptCompile Include="Scripts\HighOrderComponents\LoginHOC\LoginHOC.tsx" />
   </ItemGroup>
 
 </Project>
