@@ -7,8 +7,10 @@
 
   <ItemGroup>
     <None Remove="Scripts\Common\Common.tsx" />
+    <None Remove="Scripts\Common\Models\IResponse.tsx" />
     <None Remove="Scripts\Components\Button\Button.tsx" />
     <None Remove="Scripts\Components\Login\Login.tsx" />
+    <None Remove="Scripts\Components\Response\Response.tsx" />
     <None Remove="Scripts\Components\SignUp\SignUp.tsx" />
     <None Remove="Scripts\Components\SignUp\SignUp.tsx~RF47e2c56f.TMP" />
     <None Remove="Scripts\Components\Textbox\Textbox.tsx" />
@@ -33,8 +35,10 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\Common\Common.tsx" />
+    <TypeScriptCompile Include="Scripts\Common\Models\IResponse.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Button\Button.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Login\Login.tsx" />
+    <TypeScriptCompile Include="Scripts\Components\Response\Response.tsx" />
     <TypeScriptCompile Include="Scripts\Components\SignUp\SignUp.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Textbox\Textbox.tsx" />
     <TypeScriptCompile Include="Scripts\Entries\Login\Index.tsx" />

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("../Common/Models/Response");
 function getAntiForgeryToken(data) {
     var antiForgElement = document.getElementsByName('__RequestVerificationToken')[0];
     if (antiForgElement != null) {

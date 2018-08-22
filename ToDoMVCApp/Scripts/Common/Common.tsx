@@ -13,19 +13,17 @@ export function getAntiForgeryTokenWithoutData() {
     return null;
 };
 
-export function postData(url: string, data: string, requestVerificationToken: string) {
+export function postData(url: string, data: string, requestVerificationToken: string):Promise<string> {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', url);
         xhr.setRequestHeader('RequestVerificationToken', requestVerificationToken);
         xhr.onload = function () {
             if (xhr.status == 200) {
-                resolve(xhr.response);
-                return "HelloWorld";
+                resolve(xhr.response);                
             }
             else {
                 reject(Error(xhr.statusText));
-                return "Error";
             }
         };
         xhr.onerror = function () {

@@ -5,13 +5,16 @@ import { Button } from '../../Components/Button/Button';
 var SideImage = require('../../../wwwroot/images/GenericSnowPicture.jpg');
 import { postData, getAntiForgeryToken, getAntiForgeryTokenWithoutData } from '../../Common/Common';
 import { HtmlHTMLAttributes } from 'react';
+import { IResponse } from '../../Common/Models/IResponse';
+import { Response, ResponseTypeEnum } from '../Response/Response';
 
 export interface ISignUpProps {
     Title?: string;
 }
 export interface ISignUpState {
-    signUpError?: string;
-    isPasswordRevealed?: boolean;
+    signUpResponseMessage?: string;
+    signUpResponseType: ResponseTypeEnum;
+    isPasswordRevealed?: boolean;    
 }
 
 export class SignUp extends React.Component<ISignUpProps, ISignUpState> {
@@ -23,29 +26,46 @@ export class SignUp extends React.Component<ISignUpProps, ISignUpState> {
     constructor(props) {
         super(props)
         this.state = {
-            signUpError: "",
+            signUpResponseMessage: "",
+            signUpResponseType: ResponseTypeEnum.None,
             isPasswordRevealed: false,
         }
         this._emailInputContainer = React.createRef();
         this._passwordInputContainer = React.createRef();
         this._passwordConfirmInputContainer = React.createRef();
+
         this.handleSignUpClick = this.handleSignUpClick.bind(this);
         this.revealPassword = this.revealPassword.bind(this);
+        this.setLoginResponseState = this.setLoginResponseState.bind(this);
         this.signUp = this.signUp.bind(this);
     }
-    public handleSignUpClick = () => {
-        console.log('hit');
+    public handleSignUpClick = (): void => {
         const username = (this._emailInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
         const password = (this._passwordInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
-        const signUpData = { EmailAddress: username, Password: password};
+        const signUpData = { EmailAddress: username, Password: password };
         this.signUp(signUpData);
     }
     public signUp = async (signUpModel: object): Promise<void> => {
-        console.log('signup');
-        const response = await postData("/api/User/CreateUserAsync", JSON.stringify(signUpModel), getAntiForgeryTokenWithoutData());    
-        console.log(response);
+        await postData("/api/User/CreateUserAsync", JSON.stringify(signUpModel), getAntiForgeryTokenWithoutData())
+            .then((response) => {
+                const responseObject: IResponse = JSON.parse(response);
+                if (!responseObject.success) {
+                    this.setLoginResponseState(responseObject.responseText, ResponseTypeEnum.Error);
+                }
+                else {
+                    this.setLoginResponseState("Success!", ResponseTypeEnum.Success);
+                    window.location.href = "/";
+                }
+            });
     }
-    public revealPassword(): void {
+    public setLoginResponseState = (message: string, responseType: ResponseTypeEnum):void => {
+        this.setState({
+            ...this.state,
+            signUpResponseMessage: message,
+            signUpResponseType: responseType
+        });
+    }
+    public revealPassword = ():void =>{
         this.setState({
             ...this.state,
             isPasswordRevealed: this.state.isPasswordRevealed ? false : true
@@ -56,7 +76,7 @@ export class SignUp extends React.Component<ISignUpProps, ISignUpState> {
             <div id="UserSignUpComponent" className="sign-up-container">
                 <div id="UserSignUpComponentContainer" className="sign-up">
                     <div className="sign-up__left">
-                        <img src={"/bundles/" + SideImage}/>
+                        <img src={"/bundles/" + SideImage} />
                     </div>
                     <form className="sign-up__form">
                         <div className="company-information">
@@ -84,13 +104,9 @@ export class SignUp extends React.Component<ISignUpProps, ISignUpState> {
                         <div className="form__submit sign-up-button-container">
                             <Button Text="Sign Up" Color="#0E99D1" OnClick={this.handleSignUpClick} />
                         </div>
-                        {
-                            this.state.signUpError.length > 0 ? (
-                                <div className="form__error sign-up-error-container">
-                                    <p className="alert alert-danger"> {this.state.signUpError}</p>
-                                </div>
-                            ) : null
-                        }
+                        <div className="form__submit-response">
+                            <Response Message={this.state.signUpResponseMessage} ResponseType={this.state.signUpResponseType} />
+                        </div>
                     </form>
                 </div>
             </div>

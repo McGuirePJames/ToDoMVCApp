@@ -1,0 +1,35 @@
+﻿.container-response {
+    min-width: 100px;
+    min-height: 30px;
+    background-color: #EEC8C5;
+    padding: 15px 20px 15px 20px;
+    border-radius: 5px;
+
+    &__title {
+        font-weight: 600;
+    }
+
+    &.error-response {
+        background-color: #EEC8C5;
+
+        p {
+            color: #B22721;
+        }
+    }
+
+    &.error-response {
+        background-color: #F8F4C4;
+
+        p {
+            color: #95702C;
+        }
+    }
+
+    &.success-response {
+        background-color: #DCF3D6;
+
+        p {
+            color: #6B8262;
+        }
+    }
+}
