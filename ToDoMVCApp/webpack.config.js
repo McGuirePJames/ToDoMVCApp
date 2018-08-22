@@ -12,7 +12,7 @@ module.exports = {
         new UglifyJsPlugin(),
         require('autoprefixer'),
         new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.optimize\.css$/g,
+            assetNameRegExp: /\.min\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
             canPrint: true
@@ -23,7 +23,9 @@ module.exports = {
         }),
     ],
     entry: {
-        HomeBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/Login/Index.tsx', '../ToDoMVCApp/Stylesheets/Login/_Login.scss']
+        Common: ["babel-polyfill",'../ToDoMVCApp/Scripts/Common/Common.tsx','../ToDoMVCApp/Stylesheets/Common/_Common.scss'],
+        LoginBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/Login/Index.tsx', '../ToDoMVCApp/Stylesheets/Login/_Login.scss'],
+        SignUpBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/SignUp/SignUpIndex.tsx', '../ToDoMVCApp/Stylesheets/SignUp/_SignUp.scss']
     },
     output: {
         filename: '[name].bundle.js',

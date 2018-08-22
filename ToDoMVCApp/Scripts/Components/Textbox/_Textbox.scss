@@ -1,0 +1,48 @@
+﻿@import '../../../Stylesheets/Sass/Variables/_Colors.scss';
+@import '../../../Stylesheets/Sass/Mixins/_Placeholder.scss';
+
+.input-container > div:hover:before {
+    border-bottom-color: $ColorPrimary !important;
+}
+
+.input-container > div:after {
+    border-bottom-color: $ColorPrimary !important;
+}
+
+.input-container label {
+    color: $ColorPrimary !important;
+}
+
+.material-input {
+    position: relative;
+
+    &.has-left-icon {
+        .input-container {
+            label[data-shrink="false"] {
+                padding-left: 35px;
+            }
+        }
+    }
+
+    &.has-right-icon {
+        .input-container {
+            label[data-shrink="false"] {
+                padding-left: 35px;
+            }
+        }
+    }
+
+    .icon-container {
+        position: absolute;
+        font-size: 1.5rem;
+        bottom: 13px;
+    }
+
+    .first-icon {
+        left: 5px;
+    }
+
+    .second-icon {
+        right: 5px;
+    }
+}

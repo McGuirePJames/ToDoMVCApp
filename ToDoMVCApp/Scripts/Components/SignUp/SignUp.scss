@@ -1,0 +1,101 @@
+﻿[class="fa fa-eye"] {
+    cursor: pointer;
+}
+.sign-up-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .sign-up {
+        width: 700px;
+        display: flex;
+        -webkit-box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.75);
+
+        &__left {
+            width: 35%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.8;
+            }
+        }
+
+        &__form {
+            background-color: white;
+            width: 65%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .company-information {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+
+                &__logo {
+                    height: 50px;
+                    width: 50px;
+                    background-color: orange;
+                    border-radius: 30px;
+                }
+
+                &__name {
+                    font-size: 22pt;
+                    font-weight: 300;
+                }
+            }
+
+            & .form__description {
+                display: flex;
+                justify-content: center;
+                font-size: 15pt;
+                font-weight: 100;
+                margin-bottom: 30px;
+            }
+
+            & .form__inputs {
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                & .form__input {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+
+                    .input-container {
+                        width: 100%;
+                    }
+                }
+            }
+
+            & .form__submit {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            & .form__error {
+                margin-top: 30px;
+
+                p {
+                    padding: 10px 30px 10px 30px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

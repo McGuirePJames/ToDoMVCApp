@@ -1,0 +1,12 @@
+﻿@import '../Sass/Variables/_FontFamilies.scss';
+
+
+p, label {
+    font-family: $FontFamilyDescriptions !important;
+}
+
+
+
+h1, h2, h3, h4, h5 {
+    font-family: $FontFamilyTitle !important;
+}

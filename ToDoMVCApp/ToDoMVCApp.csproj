@@ -6,13 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Scripts\Common\Common.tsx" />
     <None Remove="Scripts\Components\Button\Button.tsx" />
     <None Remove="Scripts\Components\Login\Login.tsx" />
+    <None Remove="Scripts\Components\SignUp\SignUp.tsx" />
+    <None Remove="Scripts\Components\SignUp\SignUp.tsx~RF47e2c56f.TMP" />
+    <None Remove="Scripts\Components\Textbox\Textbox.tsx" />
     <None Remove="Scripts\Entries\Login\Index.tsx" />
+    <None Remove="Scripts\Entries\SignUp\SignUpIndex.tsx" />
     <None Remove="Scripts\HighOrderComponents\LoginHOC.tsx" />
+    <None Remove="Scripts\HighOrderComponents\SignUpHOC\SignUpHOC.tsx" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
@@ -25,10 +32,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\Common\Common.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Button\Button.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Login\Login.tsx" />
+    <TypeScriptCompile Include="Scripts\Components\SignUp\SignUp.tsx" />
+    <TypeScriptCompile Include="Scripts\Components\Textbox\Textbox.tsx" />
     <TypeScriptCompile Include="Scripts\Entries\Login\Index.tsx" />
+    <TypeScriptCompile Include="Scripts\Entries\SignUp\SignUpIndex.tsx" />
     <TypeScriptCompile Include="Scripts\HighOrderComponents\LoginHOC\LoginHOC.tsx" />
+    <TypeScriptCompile Include="Scripts\HighOrderComponents\SignUpHOC\SignUpHOC.tsx" />
   </ItemGroup>
 
 </Project>

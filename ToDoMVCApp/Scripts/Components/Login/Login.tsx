@@ -20,7 +20,7 @@ export class Login extends React.Component<{}, ILoginState> {
     public login() {
         
     }
-    public revealPassword() {
+    public revealPassword():void {
         this.setState({
             ...this.state,
             isPasswordRevealed: this.state.isPasswordRevealed ? false : true
