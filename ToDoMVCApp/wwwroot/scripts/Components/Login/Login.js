@@ -35,6 +35,9 @@ var Login = /** @class */ (function (_super) {
     }
     Login.prototype.login = function () {
     };
+    Login.prototype.componentDidMount = function () {
+        console.log("login comopnent mount");
+    };
     Login.prototype.revealPassword = function () {
         this.setState(__assign({}, this.state, { isPasswordRevealed: this.state.isPasswordRevealed ? false : true }));
     };

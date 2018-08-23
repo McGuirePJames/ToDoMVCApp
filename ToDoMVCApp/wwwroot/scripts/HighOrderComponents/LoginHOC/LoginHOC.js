@@ -9,18 +9,45 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var Login_1 = require("../../Components/Login/Login");
 require("../../HighOrderComponents/LoginHOC/LoginHOC.scss");
+var ComponentReadyStateEnum_1 = require("../../Common/Models/ComponentReadyStateEnum");
+var CircularProgress_1 = require("@material-ui/core/CircularProgress");
 var LoginHOC = /** @class */ (function (_super) {
     __extends(LoginHOC, _super);
-    function LoginHOC() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function LoginHOC(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            readyState: null
+        };
+        return _this;
     }
+    LoginHOC.prototype.componentWillMount = function () {
+        console.log('started');
+        this.setState(__assign({}, this.state, { readyState: ComponentReadyStateEnum_1.ComponentReadyStateEnum.Started }));
+    };
+    LoginHOC.prototype.componentDidMount = function () {
+        var _this = this;
+        setTimeout(function () {
+            console.log('finished');
+            _this.setState(__assign({}, _this.state, { readyState: ComponentReadyStateEnum_1.ComponentReadyStateEnum.Finished }));
+        }, 5000);
+    };
     LoginHOC.prototype.render = function () {
-        return (React.createElement("div", { className: "hocMount" },
-            React.createElement(Login_1.default, null)));
+        return (React.createElement("div", { className: "hocMount" }, this.state.readyState === ComponentReadyStateEnum_1.ComponentReadyStateEnum.Started ?
+            React.createElement(CircularProgress_1.default, null)
+            :
+                React.createElement(Login_1.default, null)));
     };
     return LoginHOC;
 }(React.Component));

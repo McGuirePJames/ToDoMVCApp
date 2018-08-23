@@ -28,6 +28,11 @@ namespace ToDoMVCApp.Controllers
 		{
 			return View();
 		}
+		[Route("/User/Login")]
+		public IActionResult Login()
+		{
+			return View();
+		}
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
@@ -38,10 +43,6 @@ namespace ToDoMVCApp.Controllers
 		public IActionResult Index()
 		{
 			return View();
-		}
-		public async Task<IActionResult> Login()
-		{
-			return BadRequest();
 		}
 		[HttpGet]
 		[ValidateAntiForgeryToken]

@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section AddToHead{
+    <link href="~/bundles/LoginBundle.css" rel="stylesheet" />
+    <link href="~/bundles/Common.css" rel="stylesheet" />
+    <meta name="Description" content="Learn about us and the services we offer">
+    <title>Login</title>
+}
+@section AddToBody{
+    <script src="~/bundles/LoginBundle.bundle.js"></script>
+}
+@Html.AntiForgeryToken()
+<div id="mount" class="hocMount">
+
+</div>

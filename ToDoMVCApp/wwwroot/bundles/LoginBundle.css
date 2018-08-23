@@ -134,8 +134,14 @@
   width: inherit; }
 
 body {
-  background-color: #F1f1f1;
+  background-color: white;
   height: 100vh; }
   body #mount {
     height: inherit; }
+    body #mount .progress-container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
 
