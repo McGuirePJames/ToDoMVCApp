@@ -5,7 +5,7 @@ import { Button } from '../../Components/Button/Button';
 var SideImage = require('../../../wwwroot/images/GenericSnowPicture.jpg');
 import { postData, getAntiForgeryToken, getAntiForgeryTokenWithoutData } from '../../Common/Common';
 import { HtmlHTMLAttributes } from 'react';
-import { IResponse } from '../../Common/Models/IResponse';
+import { Response as ResponseModel} from '../../Common/Models/Response';
 import { Response, ResponseTypeEnum } from '../Response/Response';
 
 export interface ISignUpProps {
@@ -14,7 +14,7 @@ export interface ISignUpProps {
 export interface ISignUpState {
     signUpResponseMessage?: string;
     signUpResponseType: ResponseTypeEnum;
-    isPasswordRevealed?: boolean;    
+    isPasswordRevealed?: boolean;
 }
 
 export class SignUp extends React.Component<ISignUpProps, ISignUpState> {
@@ -39,33 +39,34 @@ export class SignUp extends React.Component<ISignUpProps, ISignUpState> {
         this.setLoginResponseState = this.setLoginResponseState.bind(this);
         this.signUp = this.signUp.bind(this);
     }
-    public handleSignUpClick = (): void => {
-        const username = (this._emailInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
-        const password = (this._passwordInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
-        const signUpData = { EmailAddress: username, Password: password };
-        this.signUp(signUpData);
+    public handleSignUpClick = async (): Promise<void> => {
+        const username:string = (this._emailInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
+        const password:string = (this._passwordInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
+        const signUpModel:object = { EmailAddress: username, Password: password };
+
+        this.signUp(signUpModel).then((signUpResponse) => {
+            if (!signUpResponse.success) {
+                this.setLoginResponseState(signUpResponse.responseText, ResponseTypeEnum.Error);
+            }
+            else {
+                this.setLoginResponseState("Success!", ResponseTypeEnum.Success);
+                window.location.href = "/";
+            }
+        });
     }
-    public signUp = async (signUpModel: object): Promise<void> => {
-        await postData("/api/User/CreateUserAsync", JSON.stringify(signUpModel), getAntiForgeryTokenWithoutData())
-            .then((response) => {
-                const responseObject: IResponse = JSON.parse(response);
-                if (!responseObject.success) {
-                    this.setLoginResponseState(responseObject.responseText, ResponseTypeEnum.Error);
-                }
-                else {
-                    this.setLoginResponseState("Success!", ResponseTypeEnum.Success);
-                    window.location.href = "/";
-                }
-            });
+    public signUp = async (signUpModel: object): Promise<ResponseModel> => {
+        const signUpResult: string = await postData("/api/User/CreateUserAsync", JSON.stringify(signUpModel), getAntiForgeryTokenWithoutData());
+        const signUpResultObject: ResponseModel = JSON.parse(signUpResult);
+        return signUpResultObject;
     }
-    public setLoginResponseState = (message: string, responseType: ResponseTypeEnum):void => {
+    public setLoginResponseState = (message: string, responseType: ResponseTypeEnum): void => {
         this.setState({
             ...this.state,
             signUpResponseMessage: message,
             signUpResponseType: responseType
         });
     }
-    public revealPassword = ():void =>{
+    public revealPassword = (): void => {
         this.setState({
             ...this.state,
             isPasswordRevealed: this.state.isPasswordRevealed ? false : true

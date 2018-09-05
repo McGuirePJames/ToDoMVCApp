@@ -88,15 +88,13 @@ namespace ToDoMVCApp.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> LoginAsync(string username, string password)
+		[Route("/api/[controller]/[action]")]
+		public async Task<IActionResult> LoginAsync([FromBody] UserLogin UserLoginModel)
 		{
-			//await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-
-			// Sign user in with the valid credentials
 			ApplicationUser user = new ApplicationUser();
 
 			var result = await _signInManager.PasswordSignInAsync(
-				username, password,
+				UserLoginModel.EmailAddress, UserLoginModel.Password,
 				isPersistent: false, lockoutOnFailure: false);
 
 			if (result.Succeeded)
@@ -106,7 +104,6 @@ namespace ToDoMVCApp.Controllers
 			if (result.RequiresTwoFactor)
 			{
 				return Json(new { success = false, responseText = "Requires Two Factor Authentication" });
-
 			}
 			if (result.IsNotAllowed)
 			{
@@ -118,7 +115,7 @@ namespace ToDoMVCApp.Controllers
 			}
 			else
 			{
-				return Json(new { success = false, responseText = "Invalid again attempt" });
+				return Json(new { success = false, responseText = "Invalid email address or password" });
 			}
 		}
 		[HttpPost]

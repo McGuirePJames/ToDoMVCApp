@@ -1,26 +1,62 @@
 ﻿import * as React from 'react'
 import Button from '../Button/Button';
 import '../Login/_Login.scss';
+import TextBox from '../Textbox/Textbox';
+import { Response as ResponseModel } from '../../Common/Models/Response';
+import { postData, getAntiForgeryTokenWithoutData } from '../../Common/Common';
+import { Response, ResponseTypeEnum } from '../Response/Response';
 
 export interface ILoginState {
-    loginError: string;
+    loginResponseMessage: string;
+    loginResponseType: ResponseTypeEnum;
     isPasswordRevealed?: boolean;
 }
 
 export class Login extends React.Component<{}, ILoginState> {
+    _emailInputContainer: React.RefObject<HTMLDivElement>;
+    _passwordInputContainer: React.RefObject<HTMLDivElement>;
+
     constructor(props) {
         super(props)
         this.state = {
-            loginError: "",
-            isPasswordRevealed: false,            
+            loginResponseMessage: "",
+            loginResponseType: ResponseTypeEnum.None,
+            isPasswordRevealed: false,
         }
-        this.login = this.login.bind(this);
+        this._emailInputContainer = React.createRef();
+        this._passwordInputContainer = React.createRef();
+
+        this.handleLoginClick = this.handleLoginClick.bind(this);
         this.revealPassword = this.revealPassword.bind(this);
-    }    
-    public login() {
-        
     }
-    public revealPassword():void {
+    public handleLoginClick = async (): Promise<void> => {
+        const username:string = (this._emailInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
+        const password:string = (this._passwordInputContainer.current.getElementsByTagName('input')[0] as HTMLInputElement).value;
+        const loginModel:object = { EmailAddress: username, Password: password };
+
+        this.login(loginModel).then((loginResponse) => {
+            if (!loginResponse.success) {
+                this.setLoginResponseState(loginResponse.responseText, ResponseTypeEnum.Error);
+            }
+            else {
+                this.setLoginResponseState("Success!", ResponseTypeEnum.Success);
+                window.location.href = "/";
+            }
+        });
+    }
+    public login = async (loginModel: object): Promise<ResponseModel> => {
+        const loginResult: string = await postData("/api/User/LoginAsync", JSON.stringify(loginModel), getAntiForgeryTokenWithoutData());
+        const loginObject: ResponseModel = JSON.parse(loginResult);
+        return loginObject;
+    }
+    public setLoginResponseState = (message: string, responseType: ResponseTypeEnum): void => {
+        this.setState({
+            ...this.state,
+            loginResponseMessage: message,
+            loginResponseType: responseType
+        });
+    }
+    public revealPassword = (): void => {
         this.setState({
             ...this.state,
             isPasswordRevealed: this.state.isPasswordRevealed ? false : true
@@ -43,42 +79,16 @@ export class Login extends React.Component<{}, ILoginState> {
                         </div>
                     </div>
                     <div className="login-component__right-column right">
-                        <div className="right-column__input-group">
-                            <label>Email Address</label>
-                            <div className="inputs">
-                                <div className="inputs__icon-container icon-envelope">
-                                    <i className="fa fa-envelope" aria-hidden="true"></i>
-                                </div>
-                                <div>
-                                    <input id="LoginUsername" type="text" />
-                                </div>
-                            </div>
+                        <div className="right-column__input-group" ref={this._emailInputContainer}>
+                            <TextBox id="emailAddress" class="input-container" label="Email Address" inputType="text" multiline={false} rows={1} leftIconClassName="fa fa-envelope" rightIconClassName={null} />
                         </div>
-                        <div className="right-column__input-group">
-                            <label>Password</label>
-                            <div className="inputs">
-                                <div className="inputs__icon-container icon-lock">
-                                    <i className="fa fa-lock" aria-hidden="true"></i>
-                                </div>
-                                <div>
-                                    <input id="LoginPassword" type={this.state.isPasswordRevealed ? "text" : "password"} />
-                                </div>
-                                <div className="inputs__icon-container icon-eye">
-                                    <i className="fa fa-eye" aria-hidden="true" onClick={this.revealPassword}></i>
-                                </div>
-                            </div>
+                        <div className="right-column__input-group" ref={this._passwordInputContainer}>
+                            <TextBox id="loginPassword" class="input-container" label="Password" inputType="password" multiline={false} rows={1} leftIconClassName="fa fa-lock" rightIconClassName="fa fa-eye" />
                         </div>
                         <div className="right-column__input-group login-container">
-                            <Button Color="#0E99D1" Text="Login" OnClick={this.login} />
+                            <Button Color="#0E99D1" Text="Login" OnClick={this.handleLoginClick} />
                         </div>
-                        {
-                            this.state.loginError.length > 0 ? (
-                                <div className="right-column__login-error login-error-container">
-                                    <p className="alert alert-danger"> {this.state.loginError}</p>
-                                </div>
-                            ) : null
-                        }
-
+                        <Response Message={this.state.loginResponseMessage} ResponseType={this.state.loginResponseType} />
                     </div>
                 </div>
             </div>

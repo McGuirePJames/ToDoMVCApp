@@ -58,37 +58,37 @@ require("../SignUp/SignUp.scss");
 var Textbox_1 = require("../Textbox/Textbox");
 var Button_1 = require("../../Components/Button/Button");
 var SideImage = require('../../../wwwroot/images/GenericSnowPicture.jpg');
-var Common_1 = require("../../Common/Common");
 var Response_1 = require("../Response/Response");
 var SignUp = /** @class */ (function (_super) {
     __extends(SignUp, _super);
     function SignUp(props) {
         var _this = _super.call(this, props) || this;
-        _this.handleSignUpClick = function () {
-            var username = _this._emailInputContainer.current.getElementsByTagName('input')[0].value;
-            var password = _this._passwordInputContainer.current.getElementsByTagName('input')[0].value;
-            var signUpData = { EmailAddress: username, Password: password };
-            _this.signUp(signUpData);
-        };
-        _this.signUp = function (signUpModel) { return __awaiter(_this, void 0, void 0, function () {
-            var _this = this;
+        _this.handleSignUpClick = function () { return __awaiter(_this, void 0, void 0, function () {
+            var username, password, signUpData, signUpResponse;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Common_1.postData("/api/User/CreateUserAsync", JSON.stringify(signUpModel), Common_1.getAntiForgeryTokenWithoutData())
-                            .then(function (response) {
-                            var responseObject = JSON.parse(response);
-                            if (!responseObject.success) {
-                                _this.setLoginResponseState(responseObject.responseText, Response_1.ResponseTypeEnum.Error);
-                            }
-                            else {
-                                _this.setLoginResponseState("Success!", Response_1.ResponseTypeEnum.Success);
-                                window.location.href = "/";
-                            }
-                        })];
+                    case 0:
+                        username = this._emailInputContainer.current.getElementsByTagName('input')[0].value;
+                        password = this._passwordInputContainer.current.getElementsByTagName('input')[0].value;
+                        signUpData = { EmailAddress: username, Password: password };
+                        return [4 /*yield*/, this.signUp(signUpData)];
                     case 1:
-                        _a.sent();
+                        signUpResponse = _a.sent();
+                        if (!signUpResponse.success) {
+                            this.setLoginResponseState(signUpResponse.responseText, Response_1.ResponseTypeEnum.Error);
+                        }
+                        else {
+                            this.setLoginResponseState("Success!", Response_1.ResponseTypeEnum.Success);
+                            window.location.href = "/";
+                        }
                         return [2 /*return*/];
                 }
+            });
+        }); };
+        _this.signUp = function (signUpModel) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                //return await postData("/api/User/CreateUserAsync", JSON.stringify(signUpModel), getAntiForgeryTokenWithoutData());
+                return [2 /*return*/, null];
             });
         }); };
         _this.setLoginResponseState = function (message, responseType) {

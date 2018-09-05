@@ -24,7 +24,7 @@ function postData(url, data, requestVerificationToken) {
         xhr.open('POST', url);
         xhr.setRequestHeader('RequestVerificationToken', requestVerificationToken);
         xhr.onload = function () {
-            if (xhr.status == 200) {
+            if (xhr.status === 200) {
                 resolve(xhr.response);
             }
             else {

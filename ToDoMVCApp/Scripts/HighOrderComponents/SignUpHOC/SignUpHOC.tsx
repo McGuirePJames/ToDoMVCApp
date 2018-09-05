@@ -38,7 +38,6 @@ export class SignUpHOC extends React.Component<{}, ISignUpHOCState>{
                         <div className="progress-container">
                             <CircularProgress />
                         </div>
-
                         :
                         <SignUp Title="To Do MVC App" />
                 }

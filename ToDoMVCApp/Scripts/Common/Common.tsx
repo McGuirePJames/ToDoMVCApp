@@ -1,4 +1,6 @@
-﻿export function getAntiForgeryToken(data) {
+﻿import { Response } from "./Models/Response";
+
+export function getAntiForgeryToken(data) {
     const antiForgElement: HTMLInputElement = document.getElementsByName('__RequestVerificationToken')[0] as HTMLInputElement;
     if (antiForgElement != null) {
         data.__RequestVerificationToken = antiForgElement.value;
@@ -19,8 +21,8 @@ export function postData(url: string, data: string, requestVerificationToken: st
         xhr.open('POST', url);
         xhr.setRequestHeader('RequestVerificationToken', requestVerificationToken);
         xhr.onload = function () {
-            if (xhr.status == 200) {
-                resolve(xhr.response);                
+            if (xhr.status === 200) {   
+                resolve(xhr.response);
             }
             else {
                 reject(Error(xhr.statusText));

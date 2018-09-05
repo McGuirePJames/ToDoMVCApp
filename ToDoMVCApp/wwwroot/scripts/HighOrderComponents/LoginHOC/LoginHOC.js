@@ -33,19 +33,18 @@ var LoginHOC = /** @class */ (function (_super) {
         return _this;
     }
     LoginHOC.prototype.componentWillMount = function () {
-        console.log('started');
         this.setState(__assign({}, this.state, { readyState: ComponentReadyStateEnum_1.ComponentReadyStateEnum.Started }));
     };
     LoginHOC.prototype.componentDidMount = function () {
         var _this = this;
         setTimeout(function () {
-            console.log('finished');
             _this.setState(__assign({}, _this.state, { readyState: ComponentReadyStateEnum_1.ComponentReadyStateEnum.Finished }));
-        }, 5000);
+        }, 2000);
     };
     LoginHOC.prototype.render = function () {
         return (React.createElement("div", { className: "hocMount" }, this.state.readyState === ComponentReadyStateEnum_1.ComponentReadyStateEnum.Started ?
-            React.createElement(CircularProgress_1.default, null)
+            React.createElement("div", { className: "progress-container" },
+                React.createElement(CircularProgress_1.default, null))
             :
                 React.createElement(Login_1.default, null)));
     };

@@ -97,8 +97,6 @@
       .login-component-container .login-component__right-column div:nth-child(1) input {
         padding-right: 10px !important;
         width: 290px !important; }
-      .login-component-container .login-component__right-column .right-column__input-group:nth-child(2) {
-        margin-top: 20px; }
       .login-component-container .login-component__right-column .right-column__login-error {
         margin-top: 30px; }
         .login-component-container .login-component__right-column .right-column__login-error p {
@@ -128,6 +126,54 @@
         .login-component-container .login-component__right-column .login-container .login-container__submit:active {
           box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.75);
           top: 1px; }
+
+.input-container > div:hover:before {
+  border-bottom-color: #0E99D1 !important; }
+
+.input-container > div:after {
+  border-bottom-color: #0E99D1 !important; }
+
+.input-container label {
+  color: #0E99D1 !important; }
+
+.material-input {
+  position: relative; }
+  .material-input.has-left-icon .input-container label[data-shrink="false"] {
+    padding-left: 35px; }
+  .material-input.has-right-icon .input-container label[data-shrink="false"] {
+    padding-left: 35px; }
+  .material-input .icon-container {
+    position: absolute;
+    font-size: 1.5rem;
+    bottom: 13px; }
+    .material-input .icon-container .fa-eye {
+      cursor: pointer; }
+  .material-input .first-icon {
+    left: 5px; }
+  .material-input .second-icon {
+    right: 5px; }
+
+.container-response {
+  margin: 10px;
+  min-width: 100px;
+  min-height: 30px;
+  background-color: #EEC8C5;
+  padding: 15px 20px 15px 20px;
+  border-radius: 5px; }
+  .container-response__title {
+    font-weight: 600; }
+  .container-response.error-response {
+    background-color: #EEC8C5; }
+    .container-response.error-response p {
+      color: #B22721; }
+  .container-response.warning-response {
+    background-color: #F8F4C4; }
+    .container-response.warning-response p {
+      color: #95702C; }
+  .container-response.success-response {
+    background-color: #DCF3D6; }
+    .container-response.success-response p {
+      color: #6B8262; }
 
 .hocMount {
   height: inherit;
