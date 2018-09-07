@@ -1,0 +1,85 @@
+﻿@import '../../../Stylesheets/Sass/Mixins/_Placeholder.scss';
+
+.checklist-item {
+    border: solid;
+    height: 150px;
+    width: 300px;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 15px 20px 15px 20px;
+    cursor: pointer;
+
+    .checklist-item__top-row {
+        display: flex;
+        height: 70px;
+
+        .checklist-item__title-container {
+            width: 240px;
+            font-size: 2rem;
+            /*These selctors are for the material ui inputs.  Terrible way of adjust font size of input but it works*/
+            & > div {
+                width: inherit;
+
+                div {
+                    width: inherit;
+
+                    input {
+                        width: inherit;
+                        font-size: 32px;
+
+                        @include placeholder {
+                            font-size: 32px;
+                        }
+                    }
+                }
+
+                .error-text {
+                    width: inherit;
+                    font-size: 20px;
+                }
+
+                label {
+                    font-size: 32px;
+                }
+            }
+
+            .checklist-item__title-value {
+                width: inherit;
+                margin-top: 9px;
+            }
+        }
+
+        .checklist-item__remove {
+            font-size: 2em !important;
+            font-weight: bold !important;
+            margin-left: 30px;
+        }
+    }
+
+    .checklist-item__bottom-row {
+        height: 70px;
+
+        & > div {
+            width: 100%;
+
+            div {
+                input {
+                    font-size: 24px;
+
+                    @include placeholder {
+                        font-size: 24px;
+                    }
+                }
+            }
+
+            .error-text {
+                font-size: 20px;
+            }
+        }
+
+        .checklist-item__description {
+            font-size: 24px;
+            margin-top: 9px;
+        }
+    }
+}

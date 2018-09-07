@@ -16,7 +16,6 @@ namespace ToDoMVCApp.Controllers
 	{
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
-		private readonly IUserService userService;
 
 		public UserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
 		{

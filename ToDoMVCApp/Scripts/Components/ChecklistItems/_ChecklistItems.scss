@@ -1,0 +1,27 @@
+﻿.container-navigation{
+    display: flex;
+    justify-content: center;
+}
+
+.checklist-items {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 75px;
+    padding-right: 75px;
+    min-height: 200px;
+
+    &__add {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 350px;
+
+        .fa {
+            font-size: 5rem;
+            cursor: pointer;
+        }
+    }
+
+    .checklist-item {
+    }
+}

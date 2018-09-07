@@ -22,6 +22,7 @@
   "dependencies": {
     "@material-ui/core": "^1.5.0",
     "@types/node": "^10.7.1",
+    "animate.css": "^3.7.0",
     "autoprefixer": "^9.1.1",
     "babel-polyfill": "^6.26.0",
     "css-loader": "^1.0.0",

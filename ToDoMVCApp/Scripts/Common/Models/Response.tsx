@@ -1,4 +1,4 @@
 ﻿export class Response {
-    success: true;
+    success: boolean;
     responseText: string
 }

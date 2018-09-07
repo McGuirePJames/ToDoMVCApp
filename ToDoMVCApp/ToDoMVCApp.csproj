@@ -10,13 +10,17 @@
     <None Remove="Scripts\Common\Models\ComponentReadyStateEnum.tsx" />
     <None Remove="Scripts\Common\Models\Response.tsx" />
     <None Remove="Scripts\Components\Button\Button.tsx" />
+    <None Remove="Scripts\Components\ChecklistItem.tsx" />
+    <None Remove="Scripts\Components\ChecklistItems.tsx" />
     <None Remove="Scripts\Components\Login\Login.tsx" />
     <None Remove="Scripts\Components\Response\Response.tsx" />
     <None Remove="Scripts\Components\SignUp\SignUp.tsx" />
     <None Remove="Scripts\Components\SignUp\SignUp.tsx~RF47e2c56f.TMP" />
     <None Remove="Scripts\Components\Textbox\Textbox.tsx" />
+    <None Remove="Scripts\Entries\Checklist\CheckListIndex.tsx" />
     <None Remove="Scripts\Entries\Login\Index.tsx" />
     <None Remove="Scripts\Entries\SignUp\SignUpIndex.tsx" />
+    <None Remove="Scripts\HighOrderComponents\ChecklistHOC\ChecklistHOC.tsx" />
     <None Remove="Scripts\HighOrderComponents\LoginHOC.tsx" />
     <None Remove="Scripts\HighOrderComponents\SignUpHOC\SignUpHOC.tsx" />
   </ItemGroup>
@@ -39,12 +43,16 @@
     <TypeScriptCompile Include="Scripts\Common\Models\ComponentReadyStateEnum.tsx" />
     <TypeScriptCompile Include="Scripts\Common\Models\Response.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Button\Button.tsx" />
+    <TypeScriptCompile Include="Scripts\Components\ChecklistItems\ChecklistItems.tsx" />
+    <TypeScriptCompile Include="Scripts\Components\ChecklistItem\ChecklistItem.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Login\Login.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Response\Response.tsx" />
     <TypeScriptCompile Include="Scripts\Components\SignUp\SignUp.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Textbox\Textbox.tsx" />
+    <TypeScriptCompile Include="Scripts\Entries\Checklist\ChecklistIndex.tsx" />
     <TypeScriptCompile Include="Scripts\Entries\Login\Index.tsx" />
     <TypeScriptCompile Include="Scripts\Entries\SignUp\SignUpIndex.tsx" />
+    <TypeScriptCompile Include="Scripts\HighOrderComponents\ChecklistHOC\ChecklistHOC.tsx" />
     <TypeScriptCompile Include="Scripts\HighOrderComponents\LoginHOC\LoginHOC.tsx" />
     <TypeScriptCompile Include="Scripts\HighOrderComponents\SignUpHOC\SignUpHOC.tsx" />
   </ItemGroup>
