@@ -1,84 +1,311 @@
+body {
+  background-color: #FAFAFA; }
 
-.container-navigation {
-  display: flex;
-  justify-content: center; }
-
-.checklist-items {
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 75px;
-  padding-right: 75px;
-  min-height: 200px; }
-  .checklist-items__add {
+.root {
+  height: 100vh;
+  /*width: 100vw;*/
+  position: relative; }
+  .root .app-bar {
+    height: 56px;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    background-color: #0E99D1;
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    transition: 0.3s;
+    transition-timing-function: ease-out;
     display: flex;
-    justify-content: center;
     align-items: center;
-    min-width: 350px; }
-    .checklist-items__add .fa {
-      font-size: 5rem;
-      cursor: pointer; }
+    color: white; }
+    .root .app-bar .toggle-menu {
+      position: relative;
+      top: 5px;
+      left: 12px;
+      border-radius: 100%;
+      z-index: 3;
+      height: 45px;
+      width: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 9px; }
+      .root .app-bar .toggle-menu i {
+        border-radius: 100%;
+        z-index: 4;
+        color: white; }
+      .root .app-bar .toggle-menu:hover::after {
+        content: "";
+        z-index: 2;
+        border-radius: 100%;
+        height: 45px;
+        width: 45px;
+        background-color: rgba(0, 0, 0, 0.08);
+        position: absolute; }
+    .root .app-bar .checklist-name {
+      margin: auto; }
+      .root .app-bar .checklist-name p {
+        color: white; }
+    .root .app-bar .current-user {
+      display: flex;
+      margin-left: auto;
+      margin-right: 30px; }
+      .root .app-bar .current-user p:nth-child(1) {
+        margin-right: 10px; }
+  .root .drawer {
+    height: 100vh;
+    width: 72px;
+    position: absolute;
+    top: 0;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    z-index: 1;
+    transition: 0.3s;
+    transition-timing-function: ease-out;
+    background-color: white; }
+    .root .drawer .checklist-select-container {
+      height: 56px;
+      width: 100%;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+    .root .drawer .drawer__items {
+      height: inherit;
+      width: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden; }
+      .root .drawer .drawer__items .drawer__item-hide-drawer * {
+        left: 25px; }
+      .root .drawer .drawer__items .drawer__item {
+        height: 56px;
+        width: inherit;
+        cursor: pointer;
+        position: relative; }
+        .root .drawer .drawer__items .drawer__item * {
+          position: absolute;
+          top: 50%;
+          -webkit-transform: translateY(-50%);
+                  transform: translateY(-50%);
+          transition: 0.3s;
+          transition-timing-function: ease-out;
+          font-size: 1.8rem; }
+        .root .drawer .drawer__items .drawer__item .drawer__item-description {
+          font-size: 1rem;
+          left: 80px; }
+        .root .drawer .drawer__items .drawer__item .checklist-select {
+          font-size: 1rem; }
+      .root .drawer .drawer__items .drawer__item:not(:first-child) * {
+        left: 22px; }
+  .root .main-content {
+    width: calc(100% - 73px);
+    position: absolute;
+    top: 56px;
+    left: 73px;
+    background-color: #FAFAFA;
+    transition: 0.3s;
+    transition-timing-function: ease-out;
+    display: flex; }
+    .root .main-content .checklist-items {
+      display: flex;
+      flex-wrap: wrap; }
+      .root .main-content .checklist-items .add-checklist-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 364px;
+        height: 204px; }
+        .root .main-content .checklist-items .add-checklist-item i {
+          cursor: pointer; }
+  .root.open .app-bar {
+    width: calc(100% - 240px);
+    margin-left: 240px; }
+  .root.open .drawer {
+    width: 240px; }
+    .root.open .drawer .drawer__items .drawer__item-hide-drawer * {
+      left: 200px; }
+    .root.open .drawer .drawer__items .drawer__item:not(:first-child) * {
+      left: 15px; }
+    .root.open .drawer .drawer__items .drawer__item:not(:first-child) .drawer__item-description {
+      font-size: 1rem;
+      left: 60px;
+      white-space: nowrap; }
+  .root.open .main-content {
+    width: calc(100% - 241px);
+    left: 241px; }
+  .root .new-checklist {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    width: 350px;
+    height: 100px;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+    .root .new-checklist label[data-shrink="true"] {
+      -webkit-transform: translateY(-20px) scale(0.75) !important;
+              transform: translateY(-20px) scale(0.75) !important;
+      color: #0E99D1; }
+
+.container-response {
+  margin: 10px;
+  min-width: 100px;
+  min-height: 30px;
+  background-color: #EEC8C5;
+  padding: 15px 20px 15px 20px;
+  border-radius: 5px; }
+  .container-response__title {
+    font-weight: 600; }
+  .container-response.error-response {
+    background-color: #EEC8C5; }
+    .container-response.error-response p {
+      color: #B22721; }
+  .container-response.warning-response {
+    background-color: #F8F4C4; }
+    .container-response.warning-response p {
+      color: #95702C; }
+  .container-response.success-response {
+    background-color: #DCF3D6; }
+    .container-response.success-response p {
+      color: #6B8262; }
 
 .checklist-item {
-  border: solid;
   height: 150px;
   width: 300px;
+  border: solid;
   border-radius: 4px;
+  border-width: 2px;
   margin: 10px;
   padding: 15px 20px 15px 20px;
-  cursor: pointer; }
-  .checklist-item .checklist-item__top-row {
-    display: flex;
-    height: 70px; }
-    .checklist-item .checklist-item__top-row .checklist-item__title-container {
+  cursor: pointer;
+  display: flex;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  background-color: white; }
+  .checklist-item .checklist-item__left-column {
+    width: 80%;
+    position: relative;
+    height: inherit; }
+    .checklist-item .checklist-item__left-column .checklist-item__title-container {
       width: 240px;
-      font-size: 2rem;
-      /*These selctors are for the material ui inputs.  Terrible way of adjust font size of input but it works*/ }
-      .checklist-item .checklist-item__top-row .checklist-item__title-container > div {
+      height: 50px;
+      position: absolute; }
+      .checklist-item .checklist-item__left-column .checklist-item__title-container > div {
         width: inherit; }
-        .checklist-item .checklist-item__top-row .checklist-item__title-container > div div {
+        .checklist-item .checklist-item__left-column .checklist-item__title-container > div div {
           width: inherit; }
-          .checklist-item .checklist-item__top-row .checklist-item__title-container > div div input {
+          .checklist-item .checklist-item__left-column .checklist-item__title-container > div div input {
             width: inherit;
-            font-size: 32px; }
-            .checklist-item .checklist-item__top-row .checklist-item__title-container > div div input ::-webkit-input-placeholder {
-              font-size: 32px; }
-            .checklist-item .checklist-item__top-row .checklist-item__title-container > div div input :-moz-placeholder {
-              font-size: 32px; }
-            .checklist-item .checklist-item__top-row .checklist-item__title-container > div div input ::-moz-placeholder {
-              font-size: 32px; }
-            .checklist-item .checklist-item__top-row .checklist-item__title-container > div div input :-ms-input-placeholder {
-              font-size: 32px; }
-        .checklist-item .checklist-item__top-row .checklist-item__title-container > div .error-text {
+            font-size: 1.4rem; }
+            .checklist-item .checklist-item__left-column .checklist-item__title-container > div div input ::-webkit-input-placeholder {
+              font-size: 1.4rem; }
+            .checklist-item .checklist-item__left-column .checklist-item__title-container > div div input :-moz-placeholder {
+              font-size: 1.4rem; }
+            .checklist-item .checklist-item__left-column .checklist-item__title-container > div div input ::-moz-placeholder {
+              font-size: 1.4rem; }
+            .checklist-item .checklist-item__left-column .checklist-item__title-container > div div input :-ms-input-placeholder {
+              font-size: 1.4rem; }
+        .checklist-item .checklist-item__left-column .checklist-item__title-container > div .error-text {
           width: inherit;
           font-size: 20px; }
-        .checklist-item .checklist-item__top-row .checklist-item__title-container > div label {
+        .checklist-item .checklist-item__left-column .checklist-item__title-container > div label {
           font-size: 32px; }
-      .checklist-item .checklist-item__top-row .checklist-item__title-container .checklist-item__title-value {
+      .checklist-item .checklist-item__left-column .checklist-item__title-container .checklist-item__title-value {
         width: inherit;
-        margin-top: 9px; }
-    .checklist-item .checklist-item__top-row .checklist-item__remove {
-      font-size: 2em !important;
-      font-weight: bold !important;
-      margin-left: 30px; }
-  .checklist-item .checklist-item__bottom-row {
-    height: 70px; }
-    .checklist-item .checklist-item__bottom-row > div {
-      width: 100%; }
-      .checklist-item .checklist-item__bottom-row > div div input {
-        font-size: 24px; }
-        .checklist-item .checklist-item__bottom-row > div div input ::-webkit-input-placeholder {
-          font-size: 24px; }
-        .checklist-item .checklist-item__bottom-row > div div input :-moz-placeholder {
-          font-size: 24px; }
-        .checklist-item .checklist-item__bottom-row > div div input ::-moz-placeholder {
-          font-size: 24px; }
-        .checklist-item .checklist-item__bottom-row > div div input :-ms-input-placeholder {
-          font-size: 24px; }
-      .checklist-item .checklist-item__bottom-row > div .error-text {
-        font-size: 20px; }
-    .checklist-item .checklist-item__bottom-row .checklist-item__description {
-      font-size: 24px;
-      margin-top: 9px; }
+        font-size: 1.4rem;
+        margin-top: 9px;
+        word-wrap: break-word; }
+    .checklist-item .checklist-item__left-column .checklist-item__description-container {
+      width: 240px;
+      position: absolute;
+      top: 72px; }
+      .checklist-item .checklist-item__left-column .checklist-item__description-container > div {
+        width: inherit;
+        margin-top: -7px; }
+        .checklist-item .checklist-item__left-column .checklist-item__description-container > div div {
+          width: inherit; }
+          .checklist-item .checklist-item__left-column .checklist-item__description-container > div div textarea {
+            width: inherit;
+            font-size: 1rem;
+            font-family: "Roboto Condensed", "sans-serif"; }
+            .checklist-item .checklist-item__left-column .checklist-item__description-container > div div textarea ::-webkit-input-placeholder {
+              font-size: 1rem; }
+            .checklist-item .checklist-item__left-column .checklist-item__description-container > div div textarea :-moz-placeholder {
+              font-size: 1rem; }
+            .checklist-item .checklist-item__left-column .checklist-item__description-container > div div textarea ::-moz-placeholder {
+              font-size: 1rem; }
+            .checklist-item .checklist-item__left-column .checklist-item__description-container > div div textarea :-ms-input-placeholder {
+              font-size: 1rem; }
+        .checklist-item .checklist-item__left-column .checklist-item__description-container > div .error-text {
+          width: inherit;
+          font-size: 1rem; }
+        .checklist-item .checklist-item__left-column .checklist-item__description-container > div label {
+          font-size: 1rem; }
+      .checklist-item .checklist-item__left-column .checklist-item__description-container .checklist-item__description {
+        width: inherit;
+        font-size: 1rem;
+        word-wrap: break-word;
+        margin-top: 1px; }
+  .checklist-item .checklist-item__right-column {
+    height: inherit;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    left: 15px;
+    /*& > div {
+            width: 100%;
+
+            div {
+                input {
+                    font-size: 24px;
+
+                    @include placeholder {
+                        font-size: 24px;
+                    }
+                }
+            }
+
+            .error-text {
+                font-size: 20px;
+            }
+        }*/
+    /*.checklist-item__description {
+            font-size: 24px;
+            margin-top: 9px;
+        }*/ }
+    .checklist-item .checklist-item__right-column .checklist-item__material-checkbox-container {
+      position: absolute;
+      top: -20px;
+      right: -10px; }
+      .checklist-item .checklist-item__right-column .checklist-item__material-checkbox-container > span {
+        height: 40px;
+        width: 40px; }
+        .checklist-item .checklist-item__right-column .checklist-item__material-checkbox-container > span > span:nth-child(1) {
+          position: relative; }
+          .checklist-item .checklist-item__right-column .checklist-item__material-checkbox-container > span > span:nth-child(1) svg {
+            height: 40px;
+            width: 40px; }
+          .checklist-item .checklist-item__right-column .checklist-item__material-checkbox-container > span > span:nth-child(1) input {
+            height: 40px;
+            width: 40px; }
+    .checklist-item .checklist-item__right-column .checklist-item__save {
+      position: absolute;
+      font-size: 2.5rem !important;
+      right: 2px;
+      top: 55px;
+      color: #757575; }
+      .checklist-item .checklist-item__right-column .checklist-item__save .saved {
+        color: #7CB342; }
+    .checklist-item .checklist-item__right-column .checklist-item__remove {
+      position: absolute;
+      bottom: -5px;
+      right: 5px;
+      color: #757575; }
+    .checklist-item .checklist-item__right-column .checklist-item__crud-operation {
+      font-size: 2em;
+      font-weight: bold; }
 
 /*!
  * animate.css -http://daneden.me/animate
@@ -2561,5 +2788,72 @@
     -webkit-transition: none !important;
     animation: unset !important;
     transition: none !important; } }
+
+.dropdown {
+  background-color: red;
+  height: 40px;
+  margin: auto;
+  width: 180px;
+  background-color: #F5F4F6;
+  padding: 8px 15px 8px 15px;
+  border-bottom: solid;
+  border-width: 1px;
+  font-size: 12pt;
+  color: #0E99D1;
+  cursor: pointer;
+  position: relative; }
+  .dropdown .dropdown__label {
+    content: ""; }
+  .dropdown .dropdown__selected-item-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 7px; }
+    .dropdown .dropdown__selected-item-container .dropdown__open-indicator {
+      margin-left: auto; }
+  .dropdown .dropdown__checklists-container {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    z-index: 6;
+    background-color: white;
+    max-height: 200px; }
+    .dropdown .dropdown__checklists-container .dropdown__available-checklists {
+      width: inherit;
+      height: inherit;
+      overflow-y: scroll;
+      max-height: inherit; }
+      .dropdown .dropdown__checklists-container .dropdown__available-checklists .dropdown__available-checklist {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: inherit; }
+
+.custom-button {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  min-width: 88px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  font-weight: 500;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-family: "Roboto Condensed", "sans-serif";
+  outline: none;
+  cursor: pointer;
+  border: none;
+  background-color: #0E99D1;
+  color: #FFF;
+  position: relative;
+  transition: all .15s ease; }
+
+.custom-button:active {
+  top: 0px;
+  bottom: 0px;
+  opacity: 1 !important; }
+
+.custom-button:hover {
+  bottom: 2px;
+  opacity: 0.8; }
 
 

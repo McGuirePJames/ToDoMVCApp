@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ReactDOM = require("react-dom");
-var SignUpHOC_1 = require("../../HighOrderComponents/SignUpHOC/SignUpHOC");
-var React = require("react");
+const ReactDOM = require("react-dom");
+const SignUpHOC_1 = require("../../HighOrderComponents/SignUpHOC/SignUpHOC");
+const React = require("react");
 window.onload = function () {
     ReactDOM.render(React.createElement(SignUpHOC_1.default, null), document.getElementById('mount'));
 };

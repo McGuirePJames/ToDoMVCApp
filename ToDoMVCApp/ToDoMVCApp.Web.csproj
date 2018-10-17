@@ -7,11 +7,15 @@
 
   <ItemGroup>
     <None Remove="Scripts\Common\Common.tsx" />
+    <None Remove="Scripts\Common\Models\Checklist.tsx" />
+    <None Remove="Scripts\Common\Models\ChecklistItems.tsx" />
     <None Remove="Scripts\Common\Models\ComponentReadyStateEnum.tsx" />
     <None Remove="Scripts\Common\Models\Response.tsx" />
+    <None Remove="Scripts\Common\Models\User.ts" />
     <None Remove="Scripts\Components\Button\Button.tsx" />
     <None Remove="Scripts\Components\ChecklistItem.tsx" />
     <None Remove="Scripts\Components\ChecklistItems.tsx" />
+    <None Remove="Scripts\Components\Dropdown\Dropdown.tsx" />
     <None Remove="Scripts\Components\Login\Login.tsx" />
     <None Remove="Scripts\Components\Response\Response.tsx" />
     <None Remove="Scripts\Components\SignUp\SignUp.tsx" />
@@ -40,11 +44,15 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\Common\Common.tsx" />
+    <TypeScriptCompile Include="Scripts\Common\Models\Checklist.tsx" />
+    <TypeScriptCompile Include="Scripts\Common\Models\ChecklistItems.tsx" />
     <TypeScriptCompile Include="Scripts\Common\Models\ComponentReadyStateEnum.tsx" />
     <TypeScriptCompile Include="Scripts\Common\Models\Response.tsx" />
+    <TypeScriptCompile Include="Scripts\Common\Models\User.ts" />
     <TypeScriptCompile Include="Scripts\Components\Button\Button.tsx" />
     <TypeScriptCompile Include="Scripts\Components\ChecklistItems\ChecklistItems.tsx" />
     <TypeScriptCompile Include="Scripts\Components\ChecklistItem\ChecklistItem.tsx" />
+    <TypeScriptCompile Include="Scripts\Components\Dropdown\Dropdown.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Login\Login.tsx" />
     <TypeScriptCompile Include="Scripts\Components\Response\Response.tsx" />
     <TypeScriptCompile Include="Scripts\Components\SignUp\SignUp.tsx" />

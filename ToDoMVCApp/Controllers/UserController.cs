@@ -45,16 +45,16 @@ namespace ToDoMVCApp.Controllers
 		}
 		[HttpGet]
 		[ValidateAntiForgeryToken]
+		[Route("/api/User/GetCurrentUser")]
 		public async Task<IActionResult> GetCurrentUser()
 		{
 			ClaimsPrincipal userClaims = HttpContext.User;
 			ApplicationUser applicationUser = await _userManager.GetUserAsync(userClaims);
 			if (applicationUser != null)
 			{
-				return Json(new { success = true, responseText = applicationUser });
+				return Json(new { responseText = applicationUser });
 			}
-			return Json(new { success = false });
-
+			return Json(new { responseText = ""});
 		}
 		[HttpPost]
 		[AllowAnonymous]

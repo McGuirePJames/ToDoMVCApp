@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ToDoMVCApp.Controllers;
 using ToDoMVCApp.Data;
+using ToDoMVCApp.Data.Models;
+using ToDoMVCApp.Repo.Interfaces;
+using ToDoMVCApp.Repo.Repos;
 using ToDoMVCApp.Service.Interfaces;
 using ToDoMVCApp.Service.Services;
 
@@ -51,14 +54,26 @@ namespace ToDoMVCApp
 			})
 			.AddEntityFrameworkStores<ApplicationDbContext>()
 			.AddDefaultTokenProviders();
+
+			services.ConfigureApplicationCookie(options =>
+			{
+				options.Cookie.HttpOnly = true;
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+				options.LoginPath = "/User/Login";
+				options.SlidingExpiration = true;
+			});
+
 			services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
 			services.AddResponseCompression(options =>
 			{
 				options.EnableForHttps = true;
 				options.Providers.Add<GzipCompressionProvider>();
 			});
+
 			services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(_ToDoMVCAppDBString));
 			services.AddTransient<IUserService, UserService>();
+			services.AddTransient<IChecklistService, ChecklistService>();
+			services.AddScoped(typeof(IChecklistRepo<>), typeof(ChecklistRepo<>));
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 

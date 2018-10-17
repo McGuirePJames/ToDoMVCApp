@@ -1,22 +1,29 @@
 ﻿@import '../../../Stylesheets/Sass/Mixins/_Placeholder.scss';
+@import '../../../Stylesheets/Sass/Variables/_FontFamilies.scss';
 
 .checklist-item {
-    border: solid;
     height: 150px;
     width: 300px;
+    border: solid;
     border-radius: 4px;
+    border-width: 2px;
     margin: 10px;
     padding: 15px 20px 15px 20px;
     cursor: pointer;
+    display: flex;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    background-color: white;
 
-    .checklist-item__top-row {
-        display: flex;
-        height: 70px;
+    .checklist-item__left-column {
+        width: 80%;
+        position: relative;
+        height: inherit;
 
         .checklist-item__title-container {
             width: 240px;
-            font-size: 2rem;
-            /*These selctors are for the material ui inputs.  Terrible way of adjust font size of input but it works*/
+            height: 50px;
+            position: absolute;
+
             & > div {
                 width: inherit;
 
@@ -25,10 +32,10 @@
 
                     input {
                         width: inherit;
-                        font-size: 32px;
+                        font-size: 1.4rem;
 
                         @include placeholder {
-                            font-size: 32px;
+                            font-size: 1.4rem;
                         }
                     }
                 }
@@ -45,21 +52,113 @@
 
             .checklist-item__title-value {
                 width: inherit;
+                font-size: 1.4rem;  
                 margin-top: 9px;
+                word-wrap: break-word;
+            }
+        }
+
+        .checklist-item__description-container {
+            width: 240px;
+            position: absolute;
+            top: 72px;
+
+
+            & > div {
+                width: inherit;
+                margin-top: -7px;
+
+                div {
+                    width: inherit;
+
+                    textarea {
+                        width: inherit;
+                        font-size: 1rem;
+                        font-family: $FontFamilyDescriptions;
+
+                        @include placeholder {
+                            font-size: 1rem;
+                        }
+                    }
+                }
+
+                .error-text {
+                    width: inherit;
+                    font-size: 1rem;
+                }
+
+                label {
+                    font-size: 1rem;
+                }
+            }
+
+            .checklist-item__description {
+                width: inherit;
+                font-size: 1rem;
+                word-wrap: break-word;
+                margin-top: 1px;
+            }
+        }
+    }
+
+    .checklist-item__right-column {
+        height: inherit;
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        left: 15px;
+
+        .checklist-item__material-checkbox-container {
+            position: absolute;
+            top: -20px;
+            right: -10px;
+
+            & > span {
+                height: 40px;
+                width: 40px;
+
+                & > span:nth-child(1) {
+                    position: relative;
+
+                    svg {
+                        height: 40px;
+                        width: 40px;
+                    }
+
+                    input {
+                        height: 40px;
+                        width: 40px;
+                    }
+                }
+            }
+        }
+
+        .checklist-item__save {
+            position: absolute;
+            font-size: 2.5rem !important;
+            right: 2px;
+            top: 55px;
+            color: #757575;
+
+            .saved {
+                color: #7CB342;
             }
         }
 
         .checklist-item__remove {
-            font-size: 2em !important;
-            font-weight: bold !important;
-            margin-left: 30px;
+            position: absolute;
+            bottom: -5px;
+            right: 5px;
+            color: #757575;
         }
-    }
 
-    .checklist-item__bottom-row {
-        height: 70px;
-
-        & > div {
+        .checklist-item__crud-operation {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        /*& > div {
             width: 100%;
 
             div {
@@ -75,11 +174,10 @@
             .error-text {
                 font-size: 20px;
             }
-        }
-
-        .checklist-item__description {
+        }*/
+        /*.checklist-item__description {
             font-size: 24px;
             margin-top: 9px;
-        }
+        }*/
     }
 }

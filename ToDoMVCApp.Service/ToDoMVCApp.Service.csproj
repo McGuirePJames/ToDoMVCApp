@@ -9,4 +9,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoMVCApp.Data\ToDoMVCApp.Data.csproj" />
+    <ProjectReference Include="..\ToDoMVCApp.Repo\ToDoMVCApp.Repo.csproj" />
+  </ItemGroup>
+
 </Project>

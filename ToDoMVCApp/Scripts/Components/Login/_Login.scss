@@ -84,6 +84,7 @@
                         font-size: 20pt;
                         cursor: pointer;
                         color: $ColorThird;
+                        z-index: 100;
                     }
 
                     &__icon-container:nth-child(3) {
