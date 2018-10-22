@@ -1,0 +1,53 @@
+﻿.dropdown {
+    background-color: red;
+    height: 40px;
+    margin: auto;
+    width: 180px;
+    background-color: #F5F4F6;
+    padding: 8px 15px 8px 15px;
+    border-bottom: solid;
+    border-width: 1px;
+    font-size: 12pt;
+    color: #0E99D1;
+    cursor: pointer;
+    position: relative;
+
+    .dropdown__label {
+        content: "";
+    }
+
+    .dropdown__selected-item-container {
+        display: flex;
+        flex-direction: row;
+        margin-top: 7px;
+
+        .dropdown__open-indicator {
+            margin-left: auto;
+        }
+    }
+
+    .dropdown__checklists-container {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+        z-index: 6;
+        background-color: white;
+        max-height: 200px;
+
+        .dropdown__available-checklists {
+            width: inherit;
+            height: inherit;
+            overflow-y: scroll;
+            max-height: inherit;
+
+            .dropdown__available-checklist {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 40px;
+                width: inherit;
+            }
+        }
+    }
+}
