@@ -15,7 +15,7 @@ namespace ToDoMVCApp.Repo.Interfaces
 		List<Checklist> GetChecklistItems(string userId);
 		IQueryable<T> GetQueryable();
 		Checklist CreateChecklist(T entity);
-		void Update(T entity);
-		void Delete(T entity);
+		void SaveChecklist(Checklist checklist);
+		void DeleteChecklist(Checklist checklist);
 	}
 }

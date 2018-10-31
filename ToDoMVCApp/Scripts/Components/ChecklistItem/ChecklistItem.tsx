@@ -6,7 +6,8 @@ import { Response as ResponseModel } from '../../Common/Models/Response';
 import { ReactElement } from 'react';
 import * as ReactDOM from 'react-dom';
 import '../../../node_modules/animate.css/animate.min.css';
-import TextField from '@material-ui/core/TextField';
+import { ChecklistItems as ChecklistItemModel } from '../../Common/Models/ChecklistItems'
+//import TextField from '@material-ui/core/TextField';
 import { InputLabel, Input, FormHelperText, FormControl, Checkbox, createMuiTheme, Theme, MuiThemeProvider, WithStyles, withStyles, createStyles } from '@material-ui/core';
 import { isUndefined } from 'util';
 
@@ -61,6 +62,7 @@ export interface IChecklistItemState {
     isDestroyed: boolean,
     isSaved: boolean,
     isDescriptionEditable: boolean,
+    isNewChecklistItem: boolean,
     title: string,
     isTitleEditable: boolean,
     titleError: string,
@@ -68,8 +70,13 @@ export interface IChecklistItemState {
     descriptionError: string,
 }
 export interface IChecklistItemProps {
+    isNewChecklistItem: boolean;
+    checklistItemsId?: number;
+    checklistsId?: number;
     title: string;
     description: string;
+    dateCreated?: Date;
+    dateModified?: Date;
 }
 
 export class ChecklistItem extends React.Component<IChecklistItemProps, IChecklistItemState> {
@@ -83,6 +90,7 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
             isDestroyed: false,
             isSaved: false,
             isDescriptionEditable: true,
+            isNewChecklistItem: this.props.isNewChecklistItem,
             title: this.props.title,
             isTitleEditable: true,
             titleError: null,
@@ -93,7 +101,6 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
         this._titleContainer = React.createRef();
         this._component = React.createRef();
         this.setDescription = this.setDescription.bind(this);
-        this.handleSaveIconClick = this.handleSaveIconClick.bind(this);
     }
     private handleTitleValueClick = (): void => {
         this.setTitleEditable(true);
@@ -101,9 +108,9 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
     private handleDescriptionValueClick = (): void => {
         this.setDescriptionEditable(true);
     }
-    private handleSaveIconClick = (): void => {
+    private handleSave_Click = (): void => {
         const validation: ResponseModel = this.handleChecklistValidation();
-        if (validation.success) {
+        if (validation.success) {            
             if (this.state.isTitleEditable && this.state.isDescriptionEditable) {
                 this.setState({
                     ...this.state,
@@ -112,6 +119,16 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
                     isDescriptionEditable: false,
                     isTitleEditable: false,
                     isSaved: true
+                }, () => {
+                    if (this.state.isNewChecklistItem) {
+                        this.createChecklistItem();
+                        this.setState({
+                            isNewChecklistItem: false,
+                        })
+                    }
+                    else {
+                        this.saveChecklistItem();
+                    }
                 })
             }
             else if (this.state.isTitleEditable) {
@@ -120,6 +137,16 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
                     title: this._titleContainer.current.getElementsByTagName('input')[0].value,
                     isTitleEditable: false,
                     isSaved: true
+                }, () => {
+                    if (this.state.isNewChecklistItem) {
+                        this.createChecklistItem();
+                        this.setState({
+                            isNewChecklistItem: false,
+                        })
+                    }
+                    else {
+                        this.saveChecklistItem();
+                    }
                 })
             }
             else if (this.state.isDescriptionEditable) {
@@ -128,9 +155,18 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
                     description: this._description.getElementsByTagName('textarea')[0].value,
                     isDescriptionEditable: false,
                     isSaved: true
+                }, () => {
+                    if (this.state.isNewChecklistItem) {
+                        this.createChecklistItem();
+                        this.setState({
+                            isNewChecklistItem: false,
+                        })
+                    }
+                    else {
+                        this.saveChecklistItem();
+                    }
                 })
             }
-
         };
     }
     private handleChecklistValidation = (): ResponseModel => {
@@ -176,6 +212,38 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
             })
         }
         return response;
+    }
+    private convertStateToChecklistItem = (): ChecklistItemModel => {
+        let checklistItem: ChecklistItemModel = new ChecklistItemModel();
+        checklistItem.name = this.state.title;
+        alert(this.state.title);
+        checklistItem.description = this.state.description;
+        alert(this.state.description);
+        checklistItem.checklistsId = this.props.checklistsId;
+        alert(this.props.checklistsId);
+        //if new checklist item;
+        checklistItem.checklistsItemId = this.props.checklistItemsId !== null ? this.props.checklistItemsId : null;
+        alert(this.props.checklistItemsId);
+        return checklistItem;
+    }
+    public createChecklistItem = (): void => {
+        let checklistItem: ChecklistItemModel = this.convertStateToChecklistItem();
+        const data = JSON.stringify(checklistItem);
+        postData("/api/ChecklistItem/CreateChecklistItem", data, getAntiForgeryTokenWithoutData()).then((response) => {
+            alert('saved checklist item');
+        });
+    }
+    public saveChecklistItem = (): void => {
+        let checklistItem: ChecklistItemModel = new ChecklistItemModel();
+        checklistItem.name = this.state.title;
+        checklistItem.description = this.state.description;
+        checklistItem.checklistsId = this.props.checklistsId;
+        //if new checklist item;
+        checklistItem.checklistsItemId = this.props.checklistItemsId !== null ? this.props.checklistItemsId : null;
+        const data = JSON.stringify(checklistItem);
+        postData("/api/Checklist/SaveChecklist", data, getAntiForgeryTokenWithoutData()).then((response) => {
+            console.log('saved');
+        });
     }
     public validateInput = (input): ResponseModel => {
         const response: ResponseModel = new ResponseModel();
@@ -276,7 +344,7 @@ export class ChecklistItem extends React.Component<IChecklistItemProps, ICheckli
                                 </MuiThemeProvider>
                             </div>
                             <div className="checklist-item__crud-operation checklist-item__save">
-                                <i className={this.state.isSaved ? "fa fa-floppy-o saved" : "fa fa-floppy-o"} onClick={() => { this.handleSaveIconClick() }}></i>
+                                <i className={this.state.isSaved ? "fa fa-floppy-o saved" : "fa fa-floppy-o"} onClick={() => { this.handleSave_Click() }}></i>
                             </div>
                             <div className="checklist-item__crud-operation checklist-item__remove fa fa-ban" onClick={() => { this.setDestroyedStatus(true) }}> </div>
                         </div>

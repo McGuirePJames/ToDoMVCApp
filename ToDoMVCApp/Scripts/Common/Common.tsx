@@ -15,7 +15,7 @@ export function getAntiForgeryTokenWithoutData() {
     return null;
 };
 
-export function postData(url: string, data: string, requestVerificationToken: string): Promise<string> {
+export function postData(url: string, data: any, requestVerificationToken: string): Promise<string> {
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', url);
@@ -32,7 +32,6 @@ export function postData(url: string, data: string, requestVerificationToken: st
             reject(Error("Network Error"));
         };
         xhr.setRequestHeader('Content-type', 'application/json');
-        console.log(data);
         xhr.send(data);
     });
 }

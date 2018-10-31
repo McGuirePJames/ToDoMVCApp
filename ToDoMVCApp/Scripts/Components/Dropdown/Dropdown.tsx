@@ -30,7 +30,6 @@ export class Dropdown extends React.Component<Props, State>{
     private closeDropdown = (): void => {
         if (this.state.isOpen) {
             this.setState({
-                //...this.state,
                 isOpen: false
             })
         }
@@ -65,13 +64,11 @@ export class Dropdown extends React.Component<Props, State>{
     }
     componentDidUpdate(previousProps, previousState) {
         if (previousProps.checklists !== this.props.checklists) {
-            console.log('hit first if');
             this.setState({
                 checklists: this.props.checklists
             })
         }
         if (previousProps.currentChecklist !== this.props.currentChecklist) {
-            console.log('hit second if');
             this.setState({
                 currentChecklist: this.props.currentChecklist
             })
@@ -90,7 +87,7 @@ export class Dropdown extends React.Component<Props, State>{
                     {
                         this.state.currentChecklist !== null ?
                             (<p>{this.state.currentChecklist.name}</p>)
-                            : null
+                            : <p>Select a checklist</p>
                     }
                     <div className="dropdown__open-indicator">
                         {

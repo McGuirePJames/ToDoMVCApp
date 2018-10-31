@@ -10,5 +10,7 @@ namespace ToDoMVCApp.Service.Interfaces
     {
 		List<Checklist> GetChecklists(string userId);
 		Checklist CreateChecklist(string name, string userId);
+		void DeleteChecklist(int checklistId);
+		void SaveChecklist(Checklist checklist);
     }
 }

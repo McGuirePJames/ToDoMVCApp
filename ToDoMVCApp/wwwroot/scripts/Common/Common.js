@@ -35,7 +35,6 @@ function postData(url, data, requestVerificationToken) {
             reject(Error("Network Error"));
         };
         xhr.setRequestHeader('Content-type', 'application/json');
-        console.log(data);
         xhr.send(data);
     });
 }

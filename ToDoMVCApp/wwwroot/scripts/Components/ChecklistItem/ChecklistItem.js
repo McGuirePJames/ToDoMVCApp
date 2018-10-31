@@ -2,8 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 require("../ChecklistItem/_ChecklistItem.scss");
+const Common_1 = require("../../Common/Common");
 const Response_1 = require("../../Common/Models/Response");
 require("../../../node_modules/animate.css/animate.min.css");
+const ChecklistItems_1 = require("../../Common/Models/ChecklistItems");
+//import TextField from '@material-ui/core/TextField';
 const core_1 = require("@material-ui/core");
 const util_1 = require("util");
 const textFieldTheme = core_1.createMuiTheme({
@@ -61,17 +64,47 @@ class ChecklistItem extends React.Component {
         this.handleDescriptionValueClick = () => {
             this.setDescriptionEditable(true);
         };
-        this.handleSaveIconClick = () => {
+        this.handleSave_Click = () => {
             const validation = this.handleChecklistValidation();
             if (validation.success) {
                 if (this.state.isTitleEditable && this.state.isDescriptionEditable) {
-                    this.setState(Object.assign({}, this.state, { title: this._titleContainer.current.getElementsByTagName('input')[0].value, description: this._description.getElementsByTagName('textarea')[0].value, isDescriptionEditable: false, isTitleEditable: false, isSaved: true }));
+                    this.setState(Object.assign({}, this.state, { title: this._titleContainer.current.getElementsByTagName('input')[0].value, description: this._description.getElementsByTagName('textarea')[0].value, isDescriptionEditable: false, isTitleEditable: false, isSaved: true }), () => {
+                        if (this.state.isNewChecklistItem) {
+                            this.createChecklistItem();
+                            this.setState({
+                                isNewChecklistItem: false,
+                            });
+                        }
+                        else {
+                            this.saveChecklistItem();
+                        }
+                    });
                 }
                 else if (this.state.isTitleEditable) {
-                    this.setState(Object.assign({}, this.state, { title: this._titleContainer.current.getElementsByTagName('input')[0].value, isTitleEditable: false, isSaved: true }));
+                    this.setState(Object.assign({}, this.state, { title: this._titleContainer.current.getElementsByTagName('input')[0].value, isTitleEditable: false, isSaved: true }), () => {
+                        if (this.state.isNewChecklistItem) {
+                            this.createChecklistItem();
+                            this.setState({
+                                isNewChecklistItem: false,
+                            });
+                        }
+                        else {
+                            this.saveChecklistItem();
+                        }
+                    });
                 }
                 else if (this.state.isDescriptionEditable) {
-                    this.setState(Object.assign({}, this.state, { description: this._description.getElementsByTagName('textarea')[0].value, isDescriptionEditable: false, isSaved: true }));
+                    this.setState(Object.assign({}, this.state, { description: this._description.getElementsByTagName('textarea')[0].value, isDescriptionEditable: false, isSaved: true }), () => {
+                        if (this.state.isNewChecklistItem) {
+                            this.createChecklistItem();
+                            this.setState({
+                                isNewChecklistItem: false,
+                            });
+                        }
+                        else {
+                            this.saveChecklistItem();
+                        }
+                    });
                 }
             }
             ;
@@ -100,6 +133,38 @@ class ChecklistItem extends React.Component {
                 this.setState(Object.assign({}, this.state, { descriptionError: null, titleError: null }));
             }
             return response;
+        };
+        this.convertStateToChecklistItem = () => {
+            let checklistItem = new ChecklistItems_1.ChecklistItems();
+            checklistItem.name = this.state.title;
+            alert(this.state.title);
+            checklistItem.description = this.state.description;
+            alert(this.state.description);
+            checklistItem.checklistsId = this.props.checklistsId;
+            alert(this.props.checklistsId);
+            //if new checklist item;
+            checklistItem.checklistsItemId = this.props.checklistItemsId !== null ? this.props.checklistItemsId : null;
+            alert(this.props.checklistItemsId);
+            return checklistItem;
+        };
+        this.createChecklistItem = () => {
+            let checklistItem = this.convertStateToChecklistItem();
+            const data = JSON.stringify(checklistItem);
+            Common_1.postData("/api/ChecklistItem/CreateChecklistItem", data, Common_1.getAntiForgeryTokenWithoutData()).then((response) => {
+                alert('saved checklist item');
+            });
+        };
+        this.saveChecklistItem = () => {
+            let checklistItem = new ChecklistItems_1.ChecklistItems();
+            checklistItem.name = this.state.title;
+            checklistItem.description = this.state.description;
+            checklistItem.checklistsId = this.props.checklistsId;
+            //if new checklist item;
+            checklistItem.checklistsItemId = this.props.checklistItemsId !== null ? this.props.checklistItemsId : null;
+            const data = JSON.stringify(checklistItem);
+            Common_1.postData("/api/Checklist/SaveChecklist", data, Common_1.getAntiForgeryTokenWithoutData()).then((response) => {
+                console.log('saved');
+            });
         };
         this.validateInput = (input) => {
             const response = new Response_1.Response();
@@ -135,6 +200,7 @@ class ChecklistItem extends React.Component {
             isDestroyed: false,
             isSaved: false,
             isDescriptionEditable: true,
+            isNewChecklistItem: this.props.isNewChecklistItem,
             title: this.props.title,
             isTitleEditable: true,
             titleError: null,
@@ -144,7 +210,6 @@ class ChecklistItem extends React.Component {
         this._titleContainer = React.createRef();
         this._component = React.createRef();
         this.setDescription = this.setDescription.bind(this);
-        this.handleSaveIconClick = this.handleSaveIconClick.bind(this);
     }
     render() {
         return (this.state.isDestroyed ?
@@ -171,7 +236,7 @@ class ChecklistItem extends React.Component {
                             React.createElement(core_1.MuiThemeProvider, { theme: checkBoxTheme },
                                 React.createElement(core_1.Checkbox, { onChange: () => { } }))),
                         React.createElement("div", { className: "checklist-item__crud-operation checklist-item__save" },
-                            React.createElement("i", { className: this.state.isSaved ? "fa fa-floppy-o saved" : "fa fa-floppy-o", onClick: () => { this.handleSaveIconClick(); } })),
+                            React.createElement("i", { className: this.state.isSaved ? "fa fa-floppy-o saved" : "fa fa-floppy-o", onClick: () => { this.handleSave_Click(); } })),
                         React.createElement("div", { className: "checklist-item__crud-operation checklist-item__remove fa fa-ban", onClick: () => { this.setDestroyedStatus(true); } }, " ")))));
     }
 }

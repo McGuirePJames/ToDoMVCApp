@@ -32,5 +32,14 @@ namespace ToDoMVCApp.Service.Services
 		{
 			return _checklistRepository.GetChecklistItems(userId);
 		}
+		public void DeleteChecklist(int checklistId)
+		{
+			var checklist = new Checklist() { ChecklistsId = checklistId };
+			_checklistRepository.DeleteChecklist(checklist);
+		}
+		public void SaveChecklist(Checklist checklist)
+		{
+			_checklistRepository.SaveChecklist(checklist);
+		}
 	}
 }

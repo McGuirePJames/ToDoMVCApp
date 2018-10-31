@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using ToDoMVCApp.Data.Models;
 
-namespace ToDoMVCApp.Service.Interfaces
+namespace ToDoMVCApp.Repo.Interfaces
 {
-    public interface IChecklistItemService
+    public interface IChecklistItemRepo<T>
     {
-		List<ChecklistItem> GetChecklistItems();
 		void DeleteChecklistItems(List<ChecklistItem> checklistItems);
 		void SaveChecklistItem(ChecklistItem checklistItem);
 		void CreateChecklistItem(ChecklistItem checklistItem);

@@ -23,11 +23,10 @@ module.exports = {
         }),
     ],
     entry: {
-        //Common: ["babel-polyfill",'../ToDoMVCApp/Scripts/Common/Common.tsx','../ToDoMVCApp/Stylesheets/Common/_Common.scss'],
-        //LoginBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/Login/Index.tsx', '../ToDoMVCApp/Stylesheets/Login/_Login.scss'],
-        //SignUpBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/SignUp/SignUpIndex.tsx', '../ToDoMVCApp/Stylesheets/SignUp/_SignUp.scss'],
-        //ChecklistBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/Checklist/ChecklistIndex.tsx', '../ToDoMVCApp/Stylesheets/Checklist/_Checklist.scss'],
-        CodeDemoBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/CodeDemo/CodeDemo.tsx', '../ToDoMVCApp/Stylesheets/CodeDemo/_CodeDemo.scss'],
+        Common: ["babel-polyfill",'../ToDoMVCApp/Scripts/Common/Common.tsx','../ToDoMVCApp/Stylesheets/Common/_Common.scss'],
+        LoginBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/Login/Index.tsx', '../ToDoMVCApp/Stylesheets/Login/_Login.scss'],
+        SignUpBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/SignUp/SignUpIndex.tsx', '../ToDoMVCApp/Stylesheets/SignUp/_SignUp.scss'],
+        ChecklistBundle: ["babel-polyfill", '../ToDoMVCApp/Scripts/Entries/Checklist/ChecklistIndex.tsx', '../ToDoMVCApp/Stylesheets/Checklist/_Checklist.scss'],
     },
     output: {
         filename: '[name].bundle.js',

@@ -90,6 +90,9 @@ class ChecklistItems extends React.Component {
                 });
             });
         };
+        this.handleSaveChecklist_Click = () => {
+            this.saveCurrentChecklist();
+        };
         this.handleDropdownChange = (clickEvent) => {
             let clickedEle = clickEvent.target;
             if (!clickedEle.classList.contains("dropdown__available-checklist")) {
@@ -103,9 +106,27 @@ class ChecklistItems extends React.Component {
                 });
             }
         };
+        this.handleDeleteCurrentChecklist_Click = () => {
+            Common_1.postData("/api/Checklist/DeleteChecklist", this.state.currentChecklist.checklistsId, Common_1.getAntiForgeryTokenWithoutData())
+                .then((response) => {
+                const checklists = [...this.state.checklists];
+                const index = checklists.indexOf(this.state.currentChecklist);
+                checklists.splice(index, 1);
+                this.setState({
+                    currentChecklist: null,
+                    checklists: checklists
+                });
+            });
+        };
+        this.saveCurrentChecklist = () => {
+            const data = JSON.stringify(this.state.currentChecklist);
+            Common_1.postData("/api/Checklist/SaveChecklist", data, Common_1.getAntiForgeryTokenWithoutData()).then((response) => {
+                console.log('saved');
+            });
+        };
         this.addChecklistItem = () => {
             const cardContainer = document.createElement('div');
-            ReactDOM.render(React.createElement(ChecklistItem_1.default, { title: null, description: null }), cardContainer);
+            ReactDOM.render(React.createElement(ChecklistItem_1.default, { title: null, description: null, isNewChecklistItem: true, checklistItemsId: null, checklistsId: this.state.currentChecklist.checklistsId, dateCreated: null, dateModified: null }), cardContainer);
             this._checklistItems.current.insertBefore(cardContainer, this._addChecklistItem.current);
         };
         this.getCurrentUser = () => __awaiter(this, void 0, void 0, function* () {
@@ -168,8 +189,11 @@ class ChecklistItems extends React.Component {
                     React.createElement("div", { className: "drawer__item", onClick: () => { this.showNewChecklistForm(); } },
                         React.createElement("i", { className: "fa fa-plus-square fa-1x", "aria-hidden": "true" }),
                         this.state.isDrawerOpen ? React.createElement("p", { className: "drawer__item-description" }, "New Checklist") : null),
-                    React.createElement("div", { className: "drawer__item" },
-                        React.createElement("i", { className: "fa fa-trash fa-1x", "aria-hidden": "true" }),
+                    React.createElement("div", { className: "drawer__item", onClick: () => { this.handleSaveChecklist_Click(); } },
+                        React.createElement("i", { className: "fa fa-floppy-o fa-1x", "aria-hidden": "true" }),
+                        this.state.isDrawerOpen ? React.createElement("p", { className: "drawer__item-description" }, "Save Checklist") : null),
+                    React.createElement("div", { className: "drawer__item", onClick: (e) => { this.handleDeleteCurrentChecklist_Click(); } },
+                        React.createElement("i", { className: "fa fa-trash", "aria-hidden": "true" }),
                         this.state.isDrawerOpen ? React.createElement("p", { className: "drawer__item-description" }, "Delete Checklist") : null))),
             this.state.isAddingNewChecklist ?
                 (React.createElement("div", { className: "new-checklist" },
@@ -187,7 +211,7 @@ class ChecklistItems extends React.Component {
                         React.createElement("div", { id: "checklistItems", className: "checklist-items", ref: this._checklistItems },
                             this.state.currentChecklist !== null && this.state.currentChecklist.checklistItems.length > 0 ?
                                 this.state.currentChecklist.checklistItems.map((checklistItem, i) => {
-                                    return React.createElement(ChecklistItem_1.default, { title: checklistItem.name, description: checklistItem.description });
+                                    return React.createElement(ChecklistItem_1.default, { checklistItemsId: checklistItem.checklistsItemId, checklistsId: checklistItem.checklistsId, title: checklistItem.name, description: checklistItem.description, dateCreated: checklistItem.dateCreated, dateModified: checklistItem.dateModified, isNewChecklistItem: false });
                                 })
                                 :
                                     null,

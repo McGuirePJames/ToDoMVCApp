@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import '../ChecklistItems/_ChecklistItems.scss';
 import { postData, getAntiForgeryTokenWithoutData, getData, getAntiForgeryToken } from '../../Common/Common';
 import { Response, ResponseTypeEnum } from '../Response/Response';
-import { ReactElement, createElement, SyntheticEvent } from 'react';
+import { ReactElement, createElement, SyntheticEvent, MouseEventHandler } from 'react';
 import ChecklistItem from '../ChecklistItem/ChecklistItem';
 import { MuiThemeProvider, Theme, createMuiTheme, FormControl, InputLabel, Select, Input, MenuItem, FormHelperText, TextField } from '@material-ui/core';
 import { Response as ResponseModel } from '../../../Scripts/Common/Models/Response';
@@ -112,6 +112,9 @@ export class ChecklistItems extends React.Component<Props, State> {
             })
         });
     }
+    private handleSaveChecklist_Click = (): void => {
+        this.saveCurrentChecklist();
+    }
     private handleDropdownChange = (clickEvent: Event): void => {
         let clickedEle: HTMLElement = clickEvent.target as HTMLElement;
         if (!clickedEle.classList.contains("dropdown__available-checklist")) {
@@ -125,6 +128,18 @@ export class ChecklistItems extends React.Component<Props, State> {
             })
         }
     }
+    private handleDeleteCurrentChecklist_Click = (): void => {
+        postData("/api/Checklist/DeleteChecklist", this.state.currentChecklist.checklistsId, getAntiForgeryTokenWithoutData())
+            .then((response) => {
+                const checklists = [...this.state.checklists];
+                const index = checklists.indexOf(this.state.currentChecklist);
+                checklists.splice(index, 1);
+                this.setState({
+                    currentChecklist: null,
+                    checklists: checklists
+                })
+            })
+    }
     private getChecklistFromState(id: number): Checklist {
         let matchedChecklist: Checklist = null;
         this.state.checklists.forEach((checklist: Checklist) => {
@@ -134,11 +149,16 @@ export class ChecklistItems extends React.Component<Props, State> {
         })
         return matchedChecklist;
     }
+    public saveCurrentChecklist = (): void => {
+        const data = JSON.stringify(this.state.currentChecklist);
+        postData("/api/Checklist/SaveChecklist", data, getAntiForgeryTokenWithoutData()).then((response) => {
+            console.log('saved');
+        });
+    }
     public addChecklistItem = (): void => {
         const cardContainer: HTMLDivElement = document.createElement('div');
-
         ReactDOM.render(
-            <ChecklistItem title={null} description={null} />,
+            <ChecklistItem title={null} description={null} isNewChecklistItem={true} checklistItemsId={null} checklistsId={this.state.currentChecklist.checklistsId} dateCreated={null} dateModified={null}/>,
             cardContainer
         )
         this._checklistItems.current.insertBefore(cardContainer, this._addChecklistItem.current)
@@ -195,8 +215,12 @@ export class ChecklistItems extends React.Component<Props, State> {
                             <i className="fa fa-plus-square fa-1x" aria-hidden="true"></i>
                             {this.state.isDrawerOpen ? <p className="drawer__item-description">New Checklist</p> : null}
                         </div>
-                        <div className="drawer__item">
-                            <i className="fa fa-trash fa-1x" aria-hidden="true"></i>
+                        <div className="drawer__item" onClick={() => { this.handleSaveChecklist_Click() }}>
+                            <i className="fa fa-floppy-o fa-1x" aria-hidden="true"></i>
+                            {this.state.isDrawerOpen ? <p className="drawer__item-description">Save Checklist</p> : null}
+                        </div>
+                        <div className="drawer__item" onClick={(e) => { this.handleDeleteCurrentChecklist_Click() }}>
+                            <i className="fa fa-trash" aria-hidden="true"></i>
                             {this.state.isDrawerOpen ? <p className="drawer__item-description">Delete Checklist</p> : null}
                         </div>
                     </div>
@@ -227,7 +251,15 @@ export class ChecklistItems extends React.Component<Props, State> {
                                 <div id="checklistItems" className="checklist-items" ref={this._checklistItems}>
                                     {this.state.currentChecklist !== null && this.state.currentChecklist.checklistItems.length > 0 ?
                                         this.state.currentChecklist.checklistItems.map((checklistItem: ChecklistItemsModel, i) => {
-                                            return <ChecklistItem title={checklistItem.name} description={checklistItem.description} />
+                                            return <ChecklistItem
+                                                checklistItemsId={checklistItem.checklistsItemId}
+                                                checklistsId={checklistItem.checklistsId}
+                                                title={checklistItem.name}
+                                                description={checklistItem.description}
+                                                dateCreated={checklistItem.dateCreated}
+                                                dateModified={checklistItem.dateModified}
+                                                isNewChecklistItem={false}
+                                            />
                                         })
                                         :
                                         null

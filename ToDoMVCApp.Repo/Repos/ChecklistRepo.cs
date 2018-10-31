@@ -21,14 +21,11 @@ namespace ToDoMVCApp.Repo.Repos
 			entities = context.Set<T>();
 		}
 
-		public void Delete(T entity)
+		public void DeleteChecklist(Checklist checklist)
 		{
-			if (entity == null)
-			{
-				throw new ArgumentNullException("entity");
-			}
-			entities.Remove(entity);
-			SaveChange();
+
+			_context.Remove(checklist);
+			_context.SaveChanges();
 		}
 
 		public async Task<T> GetAsync(long id)
@@ -87,13 +84,14 @@ namespace ToDoMVCApp.Repo.Repos
 			return checklist;
 		}
 
-		public void Update(T entity)
+		public void SaveChecklist(Checklist checklist)
 		{
-			if (entity == null)
+			if (checklist == null)
 			{
 				throw new ArgumentNullException("entity");
 			}
-			SaveChange();
+			_context.checklist.Update(checklist);
+			_context.SaveChanges();
 		}
 
 		private void SaveChange()

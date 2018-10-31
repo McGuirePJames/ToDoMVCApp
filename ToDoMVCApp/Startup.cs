@@ -73,7 +73,9 @@ namespace ToDoMVCApp
 			services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(_ToDoMVCAppDBString));
 			services.AddTransient<IUserService, UserService>();
 			services.AddTransient<IChecklistService, ChecklistService>();
+			services.AddTransient<IChecklistItemService, ChecklistItemService>();
 			services.AddScoped(typeof(IChecklistRepo<>), typeof(ChecklistRepo<>));
+			services.AddScoped(typeof(IChecklistItemRepo<>), typeof(ChecklistItemRepo<>));
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 

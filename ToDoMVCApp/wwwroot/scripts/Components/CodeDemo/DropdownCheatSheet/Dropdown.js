@@ -7,13 +7,6 @@ class Dropdown extends React.Component {
         super(props);
         this._dropdown = React.createRef();
         this._checklistItems = React.createRef();
-        this.closeDropdown = () => {
-            if (this.state.isOpen) {
-                this.setState({
-                    isOpen: false
-                });
-            }
-        };
         this.handleDropdownClick = (e) => {
             const clickedEle = e.target;
             if (this.state.isOpen) {
@@ -27,20 +20,44 @@ class Dropdown extends React.Component {
                 });
             }
         };
-        this.handleDropdownItemClick = (event) => {
-        };
         this.handleOutsideClick = (e) => {
             const clickedElement = e.target;
             if (!this._dropdown.current.contains(clickedElement)) {
                 this.closeDropdown();
             }
         };
+        this.handleDropdownItemClick = (e) => {
+            let clickedEle = e.target;
+            if (!clickedEle.classList.contains("dropdown__available-checklist")) {
+                clickedEle = clickedEle.parentElement;
+            }
+            if (clickedEle != null && clickedEle instanceof HTMLElement) {
+                const selectedChecklist = this.getChecklistFromProps(Number(clickedEle.dataset.checklistId));
+                this.setState({
+                    currentChecklist: selectedChecklist
+                });
+            }
+        };
+        this.closeDropdown = () => {
+            if (this.state.isOpen) {
+                this.setState({
+                    isOpen: false
+                });
+            }
+        };
         this.state = {
             isOpen: false,
-            currentChecklist: this.props.currentChecklist,
-            checklists: this.props.checklists
+            currentChecklist: null
         };
-        this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    }
+    getChecklistFromProps(id) {
+        let matchedChecklist = null;
+        this.props.checklists.forEach((checklist) => {
+            if (checklist.checklistsId === id) {
+                matchedChecklist = checklist;
+            }
+        });
+        return matchedChecklist;
     }
     componentDidMount() {
         document.addEventListener('click', (e) => {
@@ -48,16 +65,6 @@ class Dropdown extends React.Component {
         });
     }
     componentDidUpdate(previousProps, previousState) {
-        if (previousProps.checklists !== this.props.checklists) {
-            this.setState({
-                checklists: this.props.checklists
-            });
-        }
-        if (previousProps.currentChecklist !== this.props.currentChecklist) {
-            this.setState({
-                currentChecklist: this.props.currentChecklist
-            });
-        }
     }
     componentWillUnmount() {
         document.removeEventListener('click', (e) => {
@@ -70,7 +77,7 @@ class Dropdown extends React.Component {
             React.createElement("div", { className: "dropdown__selected-item-container" },
                 this.state.currentChecklist !== null ?
                     (React.createElement("p", null, this.state.currentChecklist.name))
-                    : React.createElement("p", null, "Select a checklist"),
+                    : React.createElement("p", null, "Please select a checklist"),
                 React.createElement("div", { className: "dropdown__open-indicator" }, this.state.isOpen ?
                     (React.createElement("i", { className: "fa fa-caret-up", "aria-hidden": "true" }))
                     :
@@ -79,7 +86,7 @@ class Dropdown extends React.Component {
                 (React.createElement("div", { className: "dropdown__checklists-container", ref: this._checklistItems },
                     React.createElement("ul", { className: "dropdown__available-checklists" }, this.props.checklists !== null ?
                         this.props.checklists.map((checklist, i) => {
-                            return React.createElement("li", { className: "dropdown__available-checklist", key: i, "data-test": "myData", "data-checklist-id": checklist.checklistsId, onClick: (e) => { this.props.onChange(e); } },
+                            return React.createElement("li", { className: "dropdown__available-checklist", key: i, "data-test": "myData", "data-checklist-id": checklist.checklistsId, onClick: (e) => { this.handleDropdownItemClick(e); } },
                                 React.createElement("p", null, checklist.name));
                         })
                         : null)))
